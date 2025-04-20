@@ -1,0 +1,454 @@
+/* 全局样式 */
+:root {
+    --primary-color: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary-color: #48bfe3;
+    --success-color: #06d6a0;
+    --danger-color: #ef476f;
+    --warning-color: #ffd166;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --gray-color: #6c757d;
+    --border-radius: 12px;
+    --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Roboto', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background-color: #f5f7fb;
+    color: #343a40;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.7;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+main {
+    flex: 1;
+    padding: 2rem 0;
+}
+
+/* 导航栏样式 */
+.navbar {
+    background-color: var(--primary-color) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 0.8rem 1rem;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-size: 1.3rem;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: var(--transition);
+    margin: 0 0.2rem;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.dropdown-menu {
+    border: none;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    transition: var(--transition);
+}
+
+.dropdown-item:hover {
+    background-color: rgba(67, 97, 238, 0.1);
+}
+
+/* 卡片样式 */
+.card {
+    border: none;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: var(--transition);
+    box-shadow: var(--box-shadow);
+    background-color: white;
+    margin-bottom: 1.5rem;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    border-bottom: none;
+    padding: 1.2rem 1.5rem;
+    font-weight: 600;
+    background-color: white;
+}
+
+.card-header.bg-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)) !important;
+}
+
+.card-header.bg-success {
+    background: linear-gradient(135deg, var(--success-color), #04a57a) !important;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* 表格样式 */
+.table {
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+}
+
+.table th {
+    font-weight: 600;
+    border-top: none;
+    border-bottom: none;
+    padding: 1rem;
+    color: var(--gray-color);
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border: none;
+}
+
+.table tr {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    background-color: white;
+    transition: var(--transition);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(67, 97, 238, 0.03);
+    transform: scale(1.01);
+}
+
+/* 按钮样式 */
+.btn {
+    border-radius: 8px;
+    padding: 0.6rem 1.5rem;
+    font-weight: 500;
+    transition: var(--transition);
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    letter-spacing: 0.2px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-success:hover {
+    background-color: #04a57a;
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.btn-outline-success {
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+.btn-outline-danger {
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-outline-success:hover {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-sm {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+}
+
+.btn-group-sm > .btn {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+}
+
+/* 表单样式 */
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e4e6ef;
+    height: auto;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+}
+
+.input-group-text {
+    background-color: #f8f9fa;
+    border-color: #e4e6ef;
+    transition: var(--transition);
+}
+
+.input-group:focus-within .input-group-text {
+    border-color: var(--primary-color);
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--dark-color);
+}
+
+.form-text {
+    color: var(--gray-color);
+    font-size: 0.85rem;
+}
+
+/* 徽章样式 */
+.badge {
+    font-weight: 500;
+    padding: 0.5em 0.8em;
+    border-radius: 50rem;
+    transition: var(--transition);
+}
+
+.badge.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.badge.bg-success {
+    background-color: var(--success-color) !important;
+}
+
+.badge.bg-info {
+    background-color: var(--secondary-color) !important;
+}
+
+/* 提示信息样式 */
+.alert {
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.alert-success {
+    background-color: rgba(6, 214, 160, 0.1);
+    color: #06d6a0;
+}
+
+.alert-danger {
+    background-color: rgba(239, 71, 111, 0.1);
+    color: #ef476f;
+}
+
+/* 页脚样式 */
+footer {
+    background-color: var(--light-color);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    margin-top: 2rem;
+    padding: 1.5rem 0;
+}
+
+footer p {
+    margin-bottom: 0;
+    color: var(--gray-color);
+}
+
+/* 动画 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(30px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+.table tr {
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+}
+
+.table tr:nth-child(1) { animation-delay: 0.05s; }
+.table tr:nth-child(2) { animation-delay: 0.1s; }
+.table tr:nth-child(3) { animation-delay: 0.15s; }
+.table tr:nth-child(4) { animation-delay: 0.2s; }
+.table tr:nth-child(5) { animation-delay: 0.25s; }
+.table tr:nth-child(6) { animation-delay: 0.3s; }
+.table tr:nth-child(7) { animation-delay: 0.35s; }
+.table tr:nth-child(8) { animation-delay: 0.4s; }
+.table tr:nth-child(9) { animation-delay: 0.45s; }
+.table tr:nth-child(n+10) { animation-delay: 0.5s; }
+
+/* 模态框样式 */
+.modal-content {
+    border: none;
+    border-radius: var(--border-radius);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.25rem 1.5rem;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.25rem 1.5rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+/* 登录页特殊样式 */
+.login-container {
+    margin: 2rem auto;
+    max-width: 450px;
+    box-shadow: var(--box-shadow);
+}
+
+.login-header .login-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 10px 30px rgba(67, 97, 238, 0.2);
+}
+
+.login-header .login-icon i {
+    font-size: 2.5rem;
+}
+
+/* 暗黑模式支持 */
+.dark-mode {
+    background-color: #1a1d21;
+    color: #e4e6ef;
+}
+
+.dark-mode .card,
+.dark-mode .modal-content,
+.dark-mode footer,
+.dark-mode .dropdown-menu {
+    background-color: #252a33;
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .table th,
+.dark-mode .text-muted {
+    color: #a1a5b7 !important;
+}
+
+.dark-mode .table tr {
+    background-color: #2d3142;
+}
+
+.dark-mode .table-hover tbody tr:hover {
+    background-color: #323846;
+}
+
+.dark-mode .text-muted,
+.dark-mode .form-text {
+    color: #a1a5b7 !important;
+}
+
+.dark-mode .form-control,
+.dark-mode .form-select,
+.dark-mode .input-group-text {
+    background-color: #2d3142;
+    border-color: #424b5f;
+    color: #e4e6ef;
+}
+
+.dark-mode .btn-outline-secondary {
+    color: #a1a5b7;
+    border-color: #424b5f;
+}
+
+.dark-mode .login-container {
+    background-color: #252a33;
+}
+
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .table th, .table td {
+        padding: 0.75rem;
+    }
+    
+    .btn {
+        padding: 0.5rem 1rem;
+    }
+    
+    main {
+        padding: 1rem 0;
+    }
+}
