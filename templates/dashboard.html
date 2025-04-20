@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}仪表板 - 信息管理系统{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="card-title m-0">
+                        <i class="fas fa-th-large text-primary me-2"></i>我的信息管理
+                    </h2>
+                    <a href="{{ url_for('add_information') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i>添加信息
+                    </a>
+                </div>
+
+                <!-- 信息过滤器 -->
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-search"></i>
+                            </span>
+                            <input type="text" id="searchInput" class="form-control" placeholder="搜索信息...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select id="categoryFilter" class="form-select">
+                            <option value="">所有分类</option>
+                            <option value="工作">工作</option>
+                            <option value="学习">学习</option>
+                            <option value="生活">生活</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
+                </div>
+
+                {% if information_list %}
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle" id="informationTable">
+                        <thead>
+                            <tr>
+                                <th>标题</th>
+                                <th>分类</th>
+                                <th>日期</th>
+                                <th>内容预览</th>
+                                <th class="text-end">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for info in information_list %}
+                            <tr>
+                                <td><strong>{{ info['title'] }}</strong></td>
+                                <td>
+                                    <span class="badge rounded-pill 
+                                        {% if info['category'] == '工作' %}bg-primary
+                                        {% elif info['category'] == '学习' %}bg-info
+                                        {% elif info['category'] == '生活' %}bg-success
+                                        {% else %}bg-secondary{% endif %}">
+                                        {{ info['category'] }}
+                                    </span>
+                                </td>
+                                <td><i class="far fa-calendar-alt me-1 text-muted"></i>{{ info['date'] }}</td>
+                                <td>{{ info['content']|truncate(50) }}</td>
+                                <td>
+                                    <div class="btn-group btn-group-sm float-end">
+                                        <button type="button" class="btn btn-outline-primary view-btn" 
+                                                data-title="{{ info['title'] }}" 
+                                                data-content="{{ info['content'] }}"
+                                                data-bs-toggle="modal" data-bs-target="#viewModal">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <a href="{{ url_for('edit_information', id=info['id']) }}" class="btn btn-outline-success">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{{ url_for('delete_information', id=info['id']) }}" class="btn btn-outline-danger delete-btn"
+                                           onclick="return confirm('确定要删除这条信息吗？');">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">
+                            <i class="fas fa-folder-open"></i>
+                        </div>
+                        <h3 class="mt-4">暂无信息记录</h3>
+                        <p class="text-muted mb-4">您还没有添加任何信息，请点击下方按钮创建一条新信息。</p>
+                        <a href="{{ url_for('add_information') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-plus me-1"></i>添加第一条信息
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 查看信息的模态框 -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="p-3 bg-light rounded">
+                    <p id="viewModalContent" class="mb-0"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .empty-state {
+        padding: 2rem;
+    }
+    
+    .empty-state-icon {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(67, 97, 238, 0.05));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        font-size: 2.5rem;
+        color: var(--primary-color);
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 表格搜索功能
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const table = document.getElementById('informationTable');
+        
+        if (searchInput && table) {
+            function filterTable() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const category = categoryFilter.value.toLowerCase();
+                const rows = table.querySelectorAll('tbody tr');
+                
+                rows.forEach(row => {
+                    const title = row.cells[0].textContent.toLowerCase();
+                    const rowCategory = row.cells[1].textContent.trim().toLowerCase();
+                    const content = row.cells[3].textContent.toLowerCase();
+                    
+                    const matchesSearch = title.includes(searchTerm) || content.includes(searchTerm);
+                    const matchesCategory = category === '' || rowCategory.includes(category);
+                    
+                    if (matchesSearch && matchesCategory) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+            
+            searchInput.addEventListener('input', filterTable);
+            categoryFilter.addEventListener('change', filterTable);
+        }
+        
+        // 查看信息模态框
+        const viewButtons = document.querySelectorAll('.view-btn');
+        const viewModalTitle = document.getElementById('viewModalTitle');
+        const viewModalContent = document.getElementById('viewModalContent');
+        
+        viewButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const title = this.getAttribute('data-title');
+                const content = this.getAttribute('data-content');
+                
+                viewModalTitle.textContent = title;
+                viewModalContent.textContent = content;
+            });
+        });
+    });
+</script>
+{% endblock %}
