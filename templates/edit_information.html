@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}编辑信息 - 信息管理系统{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h4 class="card-title mb-0">
+                    <i class="fas fa-edit me-2"></i>编辑信息
+                </h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" action="{{ url_for('edit_information', id=information['id']) }}" class="fade-in needs-validation" novalidate>
+                    <div class="mb-4">
+                        <label for="title" class="form-label">标题 <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-heading"></i></span>
+                            <input type="text" class="form-control" id="title" name="title" required
+                                   value="{{ information['title'] }}" placeholder="请输入信息标题">
+                            <div class="invalid-feedback">请输入标题</div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <label for="category" class="form-label">分类 <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                <select class="form-select" id="category" name="category" required>
+                                    <option value="工作" {% if information['category'] == '工作' %}selected{% endif %}>工作</option>
+                                    <option value="学习" {% if information['category'] == '学习' %}selected{% endif %}>学习</option>
+                                    <option value="生活" {% if information['category'] == '生活' %}selected{% endif %}>生活</option>
+                                    <option value="其他" {% if information['category'] == '其他' %}selected{% endif %}>其他</option>
+                                </select>
+                                <div class="invalid-feedback">请选择分类</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="date" class="form-label">日期 <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                <input type="date" class="form-control" id="date" name="date" required
+                                       value="{{ information['date'] }}">
+                                <div class="invalid-feedback">请选择日期</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="content" class="form-label">内容 <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="content" name="content" rows="8" required placeholder="请输入信息内容...">{{ information['content'] }}</textarea>
+                        <div class="invalid-feedback">请输入内容</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-5">
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>取消
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save me-1"></i>更新信息
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // 表单验证
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('.needs-validation');
+        if (form) {
+            form.addEventListener('submit', function(event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                
+                form.classList.add('was-validated');
+            }, false);
+        }
+    });
+</script>
+{% endblock %}
